@@ -25,12 +25,12 @@ jobs:
           echo "PYRIGHT_OUT_OF_DATE=$(python version.py --compare $PYRIGHT_VERSION)" >> $GITHUB_ENV
 
       - name: Set pyright version
-        if: ${{ env.PYRIGHT_OUT_OF_DATE }} == '1'
+        if: ${{ env.PYRIGHT_OUT_OF_DATE == '1' }}
         run: |
           python version.py --set ${{ env.PYRIGHT_VERSION }}
 
       - name: Create Pull Request
-        if: ${{ env.PYRIGHT_OUT_OF_DATE }} == '1'
+        if: ${{ env.PYRIGHT_OUT_OF_DATE == '1' }}
         uses: peter-evans/create-pull-request@v3
         with:
           commit-message: Pyright NPM Package update to ${{ env.PYRIGHT_VERSION }}
