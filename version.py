@@ -68,9 +68,9 @@ if __name__ == "__main__":
         print(get_pyright_version())
     elif args.compare != None:
         if compare(args.compare[0]):
-            sys.exit(1)
+            print('1')
         else:
-            sys.exit(0)
+            print('0')
     elif args.set != None:
         set_pyright_ver(args.set[0])
         bump_pyright_package_ver()
