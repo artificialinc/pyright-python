@@ -1,0 +1,30 @@
+name: publish pyright-python
+
+on:
+  # Trigger after Test has completed on main
+  workflow_run:
+    workflows: ["Test"]
+    branches: [main]
+    paths:
+      - "pyright/_version.py"
+    types:
+      - completed
+
+jobs:
+  publish_release:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    # TODO: Change back to ubuntu-latest
+    runs-on: prod
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - run: |
+          pip install -r dev-requirements.txt
+          python setup.py sdist bdist_wheel
+          # TODO: remove repository-url
+          twine upload --repository-url https://r.reg.notartificial.xyz/repository/artificial-pypi-priv/ -u ${{ secrets.PYPI_USER }} -p ${{ secrets.PYPI_PASS }} dist/*
