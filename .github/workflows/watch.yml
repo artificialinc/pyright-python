@@ -1,8 +1,8 @@
 name: watch pyright
 on:
-  # schedule:
-  #   # At the end of every day
-  #   - cron: "0 0 * * *"
+  schedule:
+    # At the end of every day
+    - cron: "0 0 * * *"
   workflow_dispatch:
 
 jobs:
@@ -35,7 +35,7 @@ jobs:
         with:
           commit-message: Pyright NPM Package update to ${{ env.PYRIGHT_VERSION }}
           committer: GitHub <noreply@github.com>
-          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
           signoff: false
           branch: pyright-update-${{ env.BRANCH_NAME }}
           delete-branch: true
@@ -46,9 +46,7 @@ jobs:
             [1]: https://github.com/peter-evans/create-pull-request
           labels: |
             automated pr
-          assignees: artificial-aidan
-          reviewers: artificial-aidan
-          # team-reviewers: |
-          #   owners
-          #   maintainers
+          team-reviewers: |
+            owners
+            maintainers
           draft: false
